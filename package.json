@@ -1,0 +1,31 @@
+{
+  "name": "ring-microservice",
+  "version": "1.0.0",
+  "description": "Monitor and control Ring devices",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/forever --watch ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RoboDomo/ring-microservice.git"
+  },
+  "keywords": [
+    "MQTT",
+    "Ring",
+    "RoboDomo"
+  ],
+  "author": "Michael Schwartz <mykesx@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RoboDomo/ring-microservice/issues"
+  },
+  "homepage": "https://github.com/RoboDomo/ring-microservice#readme",
+  "dependencies": {
+    "debug": "^4.3.1",
+    "forever": "^3.0.4",
+    "microservice-core": "git+https://github.com/RoboDomo/microservice-core.git",
+    "ring-client-api": "^9.12.8"
+  }
+}
