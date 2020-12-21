@@ -4,7 +4,7 @@
   "description": "Monitor and control Ring devices",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/forever --watch ./index.js",
+    "start": "./node_modules/.bin/nodemon  ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "debug": "^4.3.1",
     "forever": "^3.0.4",
     "microservice-core": "git+https://github.com/RoboDomo/microservice-core.git",
+    "nodemon": "^2.0.6",
     "ring-client-api": "^9.12.8"
   }
 }
