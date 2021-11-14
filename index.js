@@ -71,7 +71,7 @@ class CameraHost extends HostBase {
         location.locationDetails.name +
         "/" +
         camera.initialData.description,
-      true
+      true,
     );
     debug("construct camera", this.topic);
     this.alert("alert", process.title, " running");
@@ -134,7 +134,7 @@ class CameraHost extends HostBase {
       }
       if (update) {
         debug(
-          ">>>>>>>>>>>>>>>>>>>>>>>>>> processEvents UPDATE >>>>>>>>>>>>>>>>>>>>"
+          ">>>>>>>>>>>>>>>>>>>>>>>>>> processEvents UPDATE >>>>>>>>>>>>>>>>>>>>",
         );
         this.retain = true;
         this.state = { events: this.events };
@@ -173,7 +173,7 @@ class CameraHost extends HostBase {
         this.state = { doorbell: "active" };
         this.alert(
           "ALERT",
-          `There is someone ringing the doorbell at ${this.device}.`
+          `There is someone ringing the doorbell at ${this.device}.`,
         );
         if (this.delayedTask) {
           this.delayedTask.defer(2000);
@@ -212,7 +212,7 @@ class ChimeHost extends HostBase {
         location.locationDetails.name +
         "/" +
         chime.initialData.description,
-      true
+      true,
     );
     debug("construct chime", this.topic);
     this.retain = false;
@@ -268,11 +268,15 @@ const processLocation = async (location) => {
 };
 
 const main = async () => {
-  const locations = await ring.getLocations();
+  try {
+    const locations = await ring.getLocations();
 
-  debug("locations", locations.length);
-  for (const location of locations) {
-    await processLocation(location);
+    debug("locations", locations.length);
+    for (const location of locations) {
+      await processLocation(location);
+    }
+  } catch (e) {
+    console.log("e", e);
   }
 };
 
