@@ -1,4 +1,4 @@
-FROM node:15
+FROM node:16
 ENV TZ=America/Los_Angeles
 RUN useradd --user-group --create-home --shell /bin/false app
 ENV HOME=/home/app

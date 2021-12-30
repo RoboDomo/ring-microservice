@@ -3,6 +3,9 @@ process.title = process.env.TITLE || "ring-microservice";
 process.env.DEBUG = "HostBase,Ring";
 
 const debug = require("debug")("Ring"),
+  promisify = require("util").promisify,
+  fs = require("fs"),
+  { writeFile, readFile } = fs,
   HostBase = require("microservice-core/HostBase");
 
 const mqtt_host = process.env.MQTT_HOST || "mqtt";
@@ -15,6 +18,25 @@ const RingAPI = require("ring-client-api"),
     avoidSnapshotBatteryDrain: true,
     refreshToken: process.env.RING_TOKEN,
   });
+
+ring.onRefreshTokenUpdated.subscribe(
+  async ({ newRefreshToken, oldRefreshToken }) => {
+    console.log("Refresh Token Updated: ", newRefreshToken);
+
+    // If you are implementing a project that use `ring-client-api`, you should subscribe to onRefreshTokenUpdated and update your config each time it fires an event
+    // Here is an example using a .env file for configuration
+    if (!oldRefreshToken) {
+      return;
+    }
+
+    const currentConfig = await promisify(readFile)(".env"),
+      updatedConfig = currentConfig
+        .toString()
+        .replace(oldRefreshToken, newRefreshToken);
+
+    await promisify(writeFile)(".env", updatedConfig);
+  },
+);
 
 function deepEqual(object1, object2) {
   const keys1 = Object.keys(object1);
